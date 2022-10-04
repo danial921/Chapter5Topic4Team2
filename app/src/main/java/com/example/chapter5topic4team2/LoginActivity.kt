@@ -32,35 +32,47 @@ class LoginActivity : AppCompatActivity() {
 
     private fun userLogin(){
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(this,HomeActivity::class.java))
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etUsername.text.toString().trim()
             val datas : MutableList<UsersItem> = mutableListOf()
             authViewModel.doLogin()
+            var cekValue = false
             authViewModel.loginObserver().observe(this){
                 if(it != null){
                     it.forEach { its ->
                         if(its.username.equals(username) && its.password.equals(password)){
-                            sharedPreferences.edit().apply {
-                                putString(Constant.ID,its.id)
-                                apply()
-                            }
-
-                            startActivity(Intent(this,HomeActivity::class.java).also { finish() })
-                            Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
-
+                            cekValue = true
+                            datas.addAll(mutableListOf(its))
+                        }else{
+                            cekValue = false
                         }
-                        datas.addAll(mutableListOf(its))
                     }
-                    Toast.makeText(this, "$datas", Toast.LENGTH_SHORT).show()
+
                 }else{
                     Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show()
                 }
             }
 
+            if(cekValue){
+                var id = ""
+                var name = ""
+                datas.forEach {
+                    id = it.id
+                    name = it.name
+                }
+                sharedPreferences.edit().apply {
+                    putString(Constant.ID,id)
+                    apply()
+                }
+                startActivity(Intent(this,HomeActivity::class.java).also {
+                    Toast.makeText(this, "Login Success, Hallo $name", Toast.LENGTH_SHORT).show()
+                    finish() })
+            }else{
+                Toast.makeText(this, "Username or password is wrong baby", Toast.LENGTH_SHORT).show()
+            }
+
             Log.d("DATAS_LOGIN","${authViewModel.loginObserver().value}")
             Log.d("DATAS_VIEW_MODEL","${authViewModel.dataLogin.value}")
-            Toast.makeText(this, "$datas", Toast.LENGTH_SHORT).show()
         }
     }
 

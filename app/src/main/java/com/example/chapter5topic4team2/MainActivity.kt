@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import com.example.chapter5topic4team2.databinding.ActivityMainBinding
 import com.example.chapter5topic4team2.util.Constant
 
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun isLogin(){
         val id = sharedPreferences.getString(Constant.ID,"undefined")
+        Toast.makeText(this, "$id", Toast.LENGTH_SHORT).show()
         if(!id.equals("undefined")){
             startActivity(Intent(this,HomeActivity::class.java))
         }else{
