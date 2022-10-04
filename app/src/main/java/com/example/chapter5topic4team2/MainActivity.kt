@@ -13,19 +13,22 @@ import com.example.chapter5topic4team2.util.Constant
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        sharedPreferences = getSharedPreferences(Constant.SHARE_PREF, Context.MODE_PRIVATE)
         setContentView(binding.root)
-        setSpalshScreen()
+
+        sharedPreferences = getSharedPreferences(Constant.SHARE_PREF, Context.MODE_PRIVATE)
+
+        setSplashScreen()
     }
 
-    private fun setSpalshScreen(){
+    private fun setSplashScreen(){
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             isLogin()
-        },1500)
+        },3000)
     }
 
     private fun isLogin(){

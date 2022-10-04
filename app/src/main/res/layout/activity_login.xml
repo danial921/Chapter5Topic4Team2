@@ -10,8 +10,10 @@
         android:id="@+id/imageLogin"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_marginTop="64dp"
         android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +62,8 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"/>
+            android:hint="@string/password"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -70,6 +73,7 @@
         android:padding="15dp"
         android:text="@string/login"
         android:textAllCaps="false"
+        android:textSize="18sp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
