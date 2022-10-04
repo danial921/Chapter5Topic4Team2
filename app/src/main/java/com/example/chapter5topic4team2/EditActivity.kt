@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.chapter5topic4team2.databinding.ActivityEditBinding
+import com.example.chapter5topic4team2.model.FilmResponseItem
 import com.example.chapter5topic4team2.viewmodel.FilmViewModel
 
 class EditActivity : AppCompatActivity() {
@@ -17,22 +18,26 @@ class EditActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnUpdate.setOnClickListener{
-//            var fetId = intent.getIntExtra("update", 0)
-            var id = binding.etid.text.toString()
-            var name = binding.etName.text.toString()
-            var image = binding.etImage.text.toString()
-            var director = binding.etDirector.text.toString()
-            var desc = binding.etDesc.text.toString()
+            val getData = intent.getSerializableExtra("dataFilmEdit") as FilmResponseItem
+
+            binding.dataFilmsUpdate = getData
+
+            val id = getData.id
+            val name = binding.etName.text.toString()
+            val date = binding.etDate.text.toString()
+            val image = binding.etImage.text.toString()
+            val director = binding.etDirector.text.toString()
+            val desc = binding.etDesc.text.toString()
             Log.d("infoid",id.toString())
-            updateFilm(id.toInt(),name,image,director, desc)
-//            finish()
+            updateFilm(id.toInt(),date, name,image,director, desc)
+            finish()
 
         }
     }
 
-    fun updateFilm (id : Int,name : String,image : String,director : String, desc : String){
+    fun updateFilm (id : Int,name : String, date: String, image : String,director : String, desc : String){
         var viewModel = ViewModelProvider(this).get(FilmViewModel::class.java)
-        viewModel.updateDataFilm(id , "2022-09-25T18:31:10.148Z", name , image, director , desc )
+        viewModel.updateDataFilm(id , date, name , image, director , desc )
         viewModel.updLivedataFilm().observe(this, Observer {
             if(it != null){
                 Toast.makeText(this, "Update Data Success", Toast.LENGTH_SHORT).show()

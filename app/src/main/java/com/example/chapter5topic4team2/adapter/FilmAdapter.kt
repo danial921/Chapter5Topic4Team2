@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.chapter5topic4team2.databinding.ItemFilmBinding
 import com.example.chapter5topic4team2.model.FilmResponseItem
 
@@ -28,8 +29,21 @@ class FilmAdapter(val onClickListener : FilmInterface) : RecyclerView.Adapter<Fi
             fun bind(film : FilmResponseItem){
                 binding.apply {
                     dataFilm = film
+
+                    Glide.with(itemView)
+                        .load(film.image)
+                        .into(ivFilm)
+
                     itemView.setOnClickListener {
                         onClickListener.onItemClick(film)
+                    }
+
+                    btnToEdit.setOnClickListener {
+                        onClickListener.editFilm(film)
+                    }
+
+                    btnDeleteData.setOnClickListener {
+                        onClickListener.deleteFilm(film.id)
                     }
                 }
             }
@@ -37,6 +51,8 @@ class FilmAdapter(val onClickListener : FilmInterface) : RecyclerView.Adapter<Fi
 
     interface FilmInterface {
         fun onItemClick(film: FilmResponseItem)
+        fun editFilm(film: FilmResponseItem)
+        fun deleteFilm(id: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -2,6 +2,7 @@ package com.example.chapter5topic4team2.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class FilmResponseItem(
     @SerializedName("date")
@@ -16,4 +17,4 @@ data class FilmResponseItem(
     val description: String,
     @SerializedName("id")
     val id: String
-)
+) : Serializable

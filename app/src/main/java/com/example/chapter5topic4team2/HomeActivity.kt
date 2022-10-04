@@ -78,4 +78,16 @@ class HomeActivity : AppCompatActivity(), FilmAdapter.FilmInterface {
     override fun onItemClick(film: FilmResponseItem) {
 
     }
+
+    override fun editFilm(film: FilmResponseItem) {
+        val bundle = Bundle()
+        val intent = Intent(this, EditActivity::class.java)
+        bundle.putSerializable("dataFilmEdit", film)
+        intent.putExtras(bundle)
+        startActivity(intent)
+    }
+
+    override fun deleteFilm(id: String) {
+
+    }
 }
