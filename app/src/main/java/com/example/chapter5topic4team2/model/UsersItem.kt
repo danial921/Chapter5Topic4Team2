@@ -1,6 +1,7 @@
 package com.example.chapter5topic4team2.model
 
 import com.google.gson.annotations.SerializedName
+
 data class UsersItem(
     @SerializedName("address")
     val address: String,

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.chapter5topic4team2.api.ApiService
 import com.example.chapter5topic4team2.model.Film
 import com.example.chapter5topic4team2.model.FilmResponseItem
+import com.example.chapter5topic4team2.model.PutFilmResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,9 +15,16 @@ class FilmViewModel : ViewModel() {
 
     private val liveDataFilms : MutableLiveData<List<FilmResponseItem>> = MutableLiveData()
     private val postDataFilm : MutableLiveData<FilmResponseItem> = MutableLiveData()
+    private var putDataFilm : MutableLiveData<List<PutFilmResponseItem>?> = MutableLiveData()
+
 
     fun getLiveDataFilms() : MutableLiveData<List<FilmResponseItem>> = liveDataFilms
     fun postLiveDataFilms() : MutableLiveData<FilmResponseItem> = postDataFilm
+
+
+    fun updLivedataFilm(): MutableLiveData<List<PutFilmResponseItem>?> {
+        return putDataFilm
+    }
 
     fun showFilmList(){
         ApiService.instance.getAllfilm()
@@ -61,5 +69,28 @@ class FilmViewModel : ViewModel() {
 
             })
     }
+
+    fun updateDataFilm(id : Int, date : String, name : String, image : String, director : String, description : String){
+        ApiService.instance.updateFilm(id, Film(date, name,image,director,description))
+            .enqueue(object : Callback<List<PutFilmResponseItem>>{
+                override fun onResponse(
+                    call: Call<List<PutFilmResponseItem>>,
+                    response: Response<List<PutFilmResponseItem>>
+                ) {
+                    if (response.isSuccessful){
+                        putDataFilm.postValue(response.body())
+                    }else{
+                        putDataFilm.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<List<PutFilmResponseItem>>, t: Throwable) {
+                    postDataFilm.postValue(null)
+                }
+
+            })
+    }
+
+
 
 }

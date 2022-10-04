@@ -2,11 +2,10 @@ package com.example.chapter5topic4team2.api
 
 import com.example.chapter5topic4team2.model.Film
 import com.example.chapter5topic4team2.model.FilmResponseItem
+import com.example.chapter5topic4team2.model.PutFilmResponseItem
 import com.example.chapter5topic4team2.model.UsersItem
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiEndPoint {
 
@@ -22,4 +21,7 @@ interface ApiEndPoint {
 
     @POST("film")
     fun addFilm(@Body film : Film) : Call<FilmResponseItem>
+
+    @PUT("film/{id}")
+    fun updateFilm(@Path("id") id : Int, @Body request : Film ): Call<List<PutFilmResponseItem>>
 }
