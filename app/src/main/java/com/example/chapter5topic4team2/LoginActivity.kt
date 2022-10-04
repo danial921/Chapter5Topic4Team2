@@ -32,16 +32,6 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etUsername.text.toString().trim()
             val datas : MutableList<UsersItem> = mutableListOf()
             authViewModel.doLogin()
-            filmViewModel.showFilmList()
-            filmViewModel.getLiveDataFilms().observe(this){
-                if(it != null){
-                   it.forEach { its ->
-                       Toast.makeText(this, "$its", Toast.LENGTH_SHORT).show()
-                   }
-                }else{
-                    Toast.makeText(this, "Null blok", Toast.LENGTH_SHORT).show()
-                }
-            }
 //            authViewModel.loginObserver().observe(this){
 //                if(it != null){
 //                    it.forEach { its ->
