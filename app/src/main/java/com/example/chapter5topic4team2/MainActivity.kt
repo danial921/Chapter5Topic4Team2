@@ -1,17 +1,22 @@
 package com.example.chapter5topic4team2
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.chapter5topic4team2.databinding.ActivityMainBinding
+import com.example.chapter5topic4team2.util.Constant
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        sharedPreferences = getSharedPreferences(Constant.SHARE_PREF, Context.MODE_PRIVATE)
         setContentView(binding.root)
         setSpalshScreen()
     }
@@ -19,7 +24,16 @@ class MainActivity : AppCompatActivity() {
     private fun setSpalshScreen(){
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-           startActivity(Intent(this,LoginActivity::class.java))
+            isLogin()
         },1500)
+    }
+
+    private fun isLogin(){
+        val id = sharedPreferences.getString(Constant.ID,"undefined")
+        if(!id.equals("undefined")){
+            startActivity(Intent(this,HomeActivity::class.java))
+        }else{
+            startActivity(Intent(this,LoginActivity::class.java))
+        }
     }
 }

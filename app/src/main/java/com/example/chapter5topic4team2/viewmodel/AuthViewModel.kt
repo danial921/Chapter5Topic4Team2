@@ -46,10 +46,12 @@ class AuthViewModel: ViewModel() {
                         val body = response.body()
                         dataRegister.postValue(body)
                     }else{
+                        dataRegister.postValue(null)
                         Log.d("notSuccess","${response.body()}")
                     }
                 }
                 override fun onFailure(call: Call<UsersItem>, t: Throwable) {
+                    dataRegister.postValue(null)
                     Log.d("OnFailure","${t.message}")
                 }
 

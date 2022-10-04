@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.makeText(this, "Register Succesfully", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this,LoginActivity::class.java).also{finish()})
                     }else{
-                        Toast.makeText(this, "Null Blok", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show()
                     }
                 }
             }else{

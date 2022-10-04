@@ -2,6 +2,7 @@ package com.example.chapter5topic4team2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chapter5topic4team2.adapter.FilmAdapter
@@ -30,7 +31,9 @@ class HomeActivity : AppCompatActivity(), FilmAdapter.FilmInterface {
             filmViewModel.showFilmList()
             filmViewModel.getLiveDataFilms().observe(this@HomeActivity){
                 adapter.setData(it)
+                Log.d("DATAS","$it")
             }
+            Log.d("DATASSSS","${filmViewModel.getLiveDataFilms().value}")
 
             rvFilm.adapter = adapter
             rvFilm.layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.VERTICAL, false)
