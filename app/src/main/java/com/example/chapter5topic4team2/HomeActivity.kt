@@ -76,7 +76,9 @@ class HomeActivity : AppCompatActivity(), FilmAdapter.FilmInterface {
     }
 
     override fun onItemClick(film: FilmResponseItem) {
-
+        startActivity(Intent(this, DetailfilmActivity::class.java).also {
+            it.putExtra("id",film.id)
+        })
     }
 
     override fun editFilm(film: FilmResponseItem) {

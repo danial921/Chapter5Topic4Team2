@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun isLogin(){
         val id = sharedPreferences.getString(Constant.ID,"undefined")
-        Toast.makeText(this, "$id", Toast.LENGTH_SHORT).show()
         if(!id.equals("undefined")){
             startActivity(Intent(this,HomeActivity::class.java))
         }else{

@@ -12,6 +12,9 @@ interface ApiEndPoint {
     @POST("user")
     fun signUp(@Body user : UsersItem):Call<UsersItem>
 
+    @GET("film/{id}")
+    fun getDetailFilm(@Path("id") id : Int): Call<FilmResponseItem>
+
     // endpoint film
     @GET("film")
     fun getAllfilm() : Call<List<FilmResponseItem>>

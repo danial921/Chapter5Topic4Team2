@@ -15,17 +15,20 @@ import retrofit2.Response
 class FilmViewModel : ViewModel() {
 
     private val liveDataFilms : MutableLiveData<List<FilmResponseItem>> = MutableLiveData()
+    private val liveDataDetailFilms : MutableLiveData<FilmResponseItem> = MutableLiveData()
     private val postDataFilm : MutableLiveData<FilmResponseItem> = MutableLiveData()
     private var putDataFilm : MutableLiveData<List<PutFilmResponseItem>?> = MutableLiveData()
 
 
     fun getLiveDataFilms() : MutableLiveData<List<FilmResponseItem>> = liveDataFilms
     fun postLiveDataFilms() : MutableLiveData<FilmResponseItem> = postDataFilm
+    fun liveDataDetailFilms() : MutableLiveData<FilmResponseItem> = liveDataDetailFilms
 
 
     fun updLivedataFilm(): MutableLiveData<List<PutFilmResponseItem>?> {
         return putDataFilm
     }
+
 
     fun showFilmList(){
         ApiService.instance.getAllfilm()
@@ -45,6 +48,27 @@ class FilmViewModel : ViewModel() {
                     liveDataFilms.postValue(null)
                     Log.d("onFailure","${t.message}")
 
+                }
+
+            })
+    }
+
+    fun callDetailApifilm(id: Int){
+        ApiService.instance.getDetailFilm(id)
+            .enqueue(object : Callback<FilmResponseItem>{
+                override fun onResponse(
+                    call: Call<FilmResponseItem>,
+                    response: Response<FilmResponseItem>
+                ) {
+                    if (response.isSuccessful){
+                        liveDataDetailFilms.postValue(response.body())
+                    }else{
+                        liveDataDetailFilms.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<FilmResponseItem>, t: Throwable) {
+                    liveDataDetailFilms.postValue(null)
                 }
 
             })
