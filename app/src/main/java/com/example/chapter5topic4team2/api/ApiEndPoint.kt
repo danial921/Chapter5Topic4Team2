@@ -11,7 +11,7 @@ import retrofit2.http.POST
 interface ApiEndPoint {
 
     @GET("user")
-    fun signIn():Call<MutableList<UsersItem>>
+    fun signIn():Call<ArrayList<UsersItem>>
 
     @POST("user")
     fun signUp(@Body user : UsersItem):Call<UsersItem>

@@ -1,5 +1,6 @@
 package com.example.chapter5topic4team2.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chapter5topic4team2.api.ApiService
@@ -33,6 +34,8 @@ class FilmViewModel : ViewModel() {
 
                 override fun onFailure(call: Call<List<FilmResponseItem>>, t: Throwable) {
                     liveDataFilms.postValue(null)
+                    Log.d("onFailure","${t.message}")
+
                 }
 
             })

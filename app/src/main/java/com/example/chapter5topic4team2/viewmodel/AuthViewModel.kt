@@ -1,37 +1,39 @@
 package com.example.chapter5topic4team2.viewmodel
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.chapter5topic4team2.api.ApiService
 import com.example.chapter5topic4team2.model.UsersItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthViewModel(application: Application):AndroidViewModel(application) {
+class AuthViewModel: ViewModel() {
 
-    val dataLogin : MutableLiveData<MutableList<UsersItem>> = MutableLiveData()
+    val dataLogin : MutableLiveData<ArrayList<UsersItem>> = MutableLiveData()
     val dataRegister : MutableLiveData<UsersItem> = MutableLiveData()
 
     fun doLogin(){
-        ApiService.instance.signIn().enqueue(object : Callback<MutableList<UsersItem>>{
+        ApiService.instance.signIn().enqueue(object : Callback<ArrayList<UsersItem>>{
             override fun onResponse(
-                call: Call<MutableList<UsersItem>>,
-                response: Response<MutableList<UsersItem>>
+                call: Call<ArrayList<UsersItem>>,
+                response: Response<ArrayList<UsersItem>>
             ) {
                 if(response.isSuccessful){
                     val body = response.body()
                     dataLogin.postValue(body)
                 }else{
                     Log.d("notSuccess","${response.body()}")
+                    dataLogin.postValue(null)
                 }
             }
 
-            override fun onFailure(call: Call<MutableList<UsersItem>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<UsersItem>>, t: Throwable) {
+                dataLogin.postValue(null)
                 Log.d("onFailure","${t.message}")
             }
+
         })
     }
 
@@ -54,6 +56,6 @@ class AuthViewModel(application: Application):AndroidViewModel(application) {
             })
     }
 
-    fun loginObserver():MutableLiveData<MutableList<UsersItem>> = dataLogin
+    fun loginObserver():MutableLiveData<ArrayList<UsersItem>> = dataLogin
     fun registerObserver():MutableLiveData<UsersItem> = dataRegister
 }
