@@ -9,3 +9,10 @@ data class Film(
     val director: String,
     val description: String
 )
+
+data class FilmAdd(
+    val name: String,
+    val image: String,
+    val director: String,
+    val description: String
+)

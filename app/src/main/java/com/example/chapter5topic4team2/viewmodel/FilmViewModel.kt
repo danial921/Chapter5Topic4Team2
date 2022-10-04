@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chapter5topic4team2.api.ApiService
 import com.example.chapter5topic4team2.model.Film
+import com.example.chapter5topic4team2.model.FilmAdd
 import com.example.chapter5topic4team2.model.FilmResponseItem
 import com.example.chapter5topic4team2.model.PutFilmResponseItem
 import retrofit2.Call
@@ -49,8 +50,8 @@ class FilmViewModel : ViewModel() {
             })
     }
 
-    fun addDataFilm(date : String, name : String, image : String, director : String, description : String){
-        ApiService.instance.addFilm(Film(date, name, image, director, description))
+    fun addDataFilm(name : String, image : String, director : String, description : String){
+        ApiService.instance.addFilm(FilmAdd(name, image, director, description))
             .enqueue(object  : Callback<FilmResponseItem>{
                 override fun onResponse(
                     call: Call<FilmResponseItem>,
