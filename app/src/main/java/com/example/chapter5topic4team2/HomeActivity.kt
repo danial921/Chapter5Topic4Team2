@@ -93,9 +93,17 @@ class HomeActivity : AppCompatActivity(), FilmAdapter.FilmInterface {
         filmViewModel.deleteDataFilm(id)
         filmViewModel.delLiveDataFilm().observe(this){
             if (it != null){
-                Toast.makeText(this, "Delete Data Success", Toast.LENGTH_SHORT).show()
-                Log.d("deleteFilm", it.toString())
+                if(it > 0){
+                    Toast.makeText(this, "Delete Data Success", Toast.LENGTH_SHORT).show()
+                    Log.d("deleteFilm", it.toString())
+                }else{
+                    Toast.makeText(this, "Success But...", Toast.LENGTH_SHORT).show()
+                }
             }
+        }
+        filmViewModel.showFilmList()
+        filmViewModel.getLiveDataFilms().observe(this){
+            adapter.setData(it)
         }
     }
 }
