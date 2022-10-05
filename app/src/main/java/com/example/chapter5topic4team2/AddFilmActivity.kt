@@ -39,6 +39,7 @@ class AddFilmActivity : AppCompatActivity() {
                 Toast.makeText(this, "Add Data Successfull", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, HomeActivity::class.java))
                 Log.d("addFilm", it.toString())
+                finish()
             }
         })
 

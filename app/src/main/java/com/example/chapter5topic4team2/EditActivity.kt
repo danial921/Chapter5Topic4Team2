@@ -1,5 +1,6 @@
 package com.example.chapter5topic4team2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,8 +31,8 @@ class EditActivity : AppCompatActivity() {
             val desc = binding.etDesc.text.toString()
             Log.d("infoid",id)
             updateFilm(id.toInt(),name,image,director, desc)
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
-
         }
     }
 
