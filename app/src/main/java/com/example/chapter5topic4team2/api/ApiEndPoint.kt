@@ -20,8 +20,11 @@ interface ApiEndPoint {
     fun getAllfilm() : Call<List<FilmResponseItem>>
 
     @POST("film")
-    fun addFilm(@Body film : FilmAdd) : Call<FilmResponseItem>
+    fun addFilm(@Body film : Film) : Call<FilmResponseItem>
 
     @PUT("film/{id}")
-    fun updateFilm(@Path("id") id : Int, @Body request : Film ): Call<List<PutFilmResponseItem>>
+    fun updateFilm(@Path("id") id : Int, @Body request : Film ) : Call<List<FilmResponseItem>>
+
+    @DELETE("film/{id}")
+    fun deleteFilm(@Path("id") id : Int) : Call<Int>
 }

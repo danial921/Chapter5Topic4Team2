@@ -36,8 +36,10 @@ class MainActivity : AppCompatActivity() {
         val id = sharedPreferences.getString(Constant.ID,"undefined")
         if(!id.equals("undefined")){
             startActivity(Intent(this,HomeActivity::class.java))
+            finish()
         }else{
             startActivity(Intent(this,LoginActivity::class.java))
+            finish()
         }
     }
 }

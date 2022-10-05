@@ -89,7 +89,13 @@ class HomeActivity : AppCompatActivity(), FilmAdapter.FilmInterface {
         startActivity(intent)
     }
 
-    override fun deleteFilm(id: String) {
-
+    override fun deleteFilm(id: Int) {
+        filmViewModel.deleteDataFilm(id)
+        filmViewModel.delLiveDataFilm().observe(this){
+            if (it != null){
+                Toast.makeText(this, "Delete Data Success", Toast.LENGTH_SHORT).show()
+                Log.d("deleteFilm", it.toString())
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ class FilmAdapter(val onClickListener : FilmInterface) : RecyclerView.Adapter<Fi
                     }
 
                     btnDeleteData.setOnClickListener {
-                        onClickListener.deleteFilm(film.id)
+                        onClickListener.deleteFilm(film.id.toInt())
                     }
                 }
             }
@@ -52,7 +52,7 @@ class FilmAdapter(val onClickListener : FilmInterface) : RecyclerView.Adapter<Fi
     interface FilmInterface {
         fun onItemClick(film: FilmResponseItem)
         fun editFilm(film: FilmResponseItem)
-        fun deleteFilm(id: String)
+        fun deleteFilm(id: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

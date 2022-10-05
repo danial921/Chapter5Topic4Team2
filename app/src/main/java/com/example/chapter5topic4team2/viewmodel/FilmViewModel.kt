@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chapter5topic4team2.api.ApiService
 import com.example.chapter5topic4team2.model.Film
-import com.example.chapter5topic4team2.model.FilmAdd
 import com.example.chapter5topic4team2.model.FilmResponseItem
-import com.example.chapter5topic4team2.model.PutFilmResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,17 +15,15 @@ class FilmViewModel : ViewModel() {
     private val liveDataFilms : MutableLiveData<List<FilmResponseItem>> = MutableLiveData()
     private val liveDataDetailFilms : MutableLiveData<FilmResponseItem> = MutableLiveData()
     private val postDataFilm : MutableLiveData<FilmResponseItem> = MutableLiveData()
-    private var putDataFilm : MutableLiveData<List<PutFilmResponseItem>?> = MutableLiveData()
+    private val putDataFilm : MutableLiveData<List<FilmResponseItem>> = MutableLiveData()
+    private val deleteDataFilm : MutableLiveData<Int> = MutableLiveData()
 
 
     fun getLiveDataFilms() : MutableLiveData<List<FilmResponseItem>> = liveDataFilms
     fun postLiveDataFilms() : MutableLiveData<FilmResponseItem> = postDataFilm
     fun liveDataDetailFilms() : MutableLiveData<FilmResponseItem> = liveDataDetailFilms
-
-
-    fun updLivedataFilm(): MutableLiveData<List<PutFilmResponseItem>?> {
-        return putDataFilm
-    }
+    fun updLivedataFilm(): MutableLiveData<List<FilmResponseItem>> = putDataFilm
+    fun delLiveDataFilm() : MutableLiveData<Int> = deleteDataFilm
 
 
     fun showFilmList(){
@@ -75,7 +71,7 @@ class FilmViewModel : ViewModel() {
     }
 
     fun addDataFilm(name : String, image : String, director : String, description : String){
-        ApiService.instance.addFilm(FilmAdd(name, image, director, description))
+        ApiService.instance.addFilm(Film(name, image, director, description))
             .enqueue(object  : Callback<FilmResponseItem>{
                 override fun onResponse(
                     call: Call<FilmResponseItem>,
@@ -95,12 +91,12 @@ class FilmViewModel : ViewModel() {
             })
     }
 
-    fun updateDataFilm(id : Int, date : String, name : String, image : String, director : String, description : String){
-        ApiService.instance.updateFilm(id, Film(date, name,image,director,description))
-            .enqueue(object : Callback<List<PutFilmResponseItem>>{
+    fun updateDataFilm(id : Int, name : String, image : String, director : String, description : String){
+        ApiService.instance.updateFilm(id, Film(name, image, director, description))
+            .enqueue(object : Callback<List<FilmResponseItem>>{
                 override fun onResponse(
-                    call: Call<List<PutFilmResponseItem>>,
-                    response: Response<List<PutFilmResponseItem>>
+                    call: Call<List<FilmResponseItem>>,
+                    response: Response<List<FilmResponseItem>>
                 ) {
                     if (response.isSuccessful){
                         putDataFilm.postValue(response.body())
@@ -109,13 +105,29 @@ class FilmViewModel : ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<List<PutFilmResponseItem>>, t: Throwable) {
+                override fun onFailure(call: Call<List<FilmResponseItem>>, t: Throwable) {
                     postDataFilm.postValue(null)
                 }
 
             })
     }
 
+    fun deleteDataFilm(id: Int){
+        ApiService.instance.deleteFilm(id)
+            .enqueue(object : Callback<Int>{
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    if (response.isSuccessful){
+                        deleteDataFilm.postValue(response.body())
+                    }else{
+                        deleteDataFilm.postValue(null)
+                    }
+                }
 
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+                    deleteDataFilm.postValue(null)
+                }
+
+            })
+    }
 
 }

@@ -17,30 +17,31 @@ class EditActivity : AppCompatActivity() {
         binding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnUpdate.setOnClickListener{
-            val getData = intent.getSerializableExtra("dataFilmEdit") as FilmResponseItem
+        val getData = intent.getSerializableExtra("dataFilmEdit") as FilmResponseItem
 
-            binding.dataFilmsUpdate = getData
+        binding.dataFilmsUpdate = getData
+
+        binding.btnUpdate.setOnClickListener{
 
             val id = getData.id
             val name = binding.etName.text.toString()
-            val date = binding.etDate.text.toString()
             val image = binding.etImage.text.toString()
             val director = binding.etDirector.text.toString()
             val desc = binding.etDesc.text.toString()
-            Log.d("infoid",id.toString())
-            updateFilm(id.toInt(),date, name,image,director, desc)
+            Log.d("infoid",id)
+            updateFilm(id.toInt(),name,image,director, desc)
             finish()
 
         }
     }
 
-    fun updateFilm (id : Int,name : String, date: String, image : String,director : String, desc : String){
+    fun updateFilm (id : Int,name : String, image : String,director : String, desc : String){
         var viewModel = ViewModelProvider(this).get(FilmViewModel::class.java)
-        viewModel.updateDataFilm(id , date, name , image, director , desc )
+        viewModel.updateDataFilm(id , name , image, director , desc )
         viewModel.updLivedataFilm().observe(this, Observer {
             if(it != null){
                 Toast.makeText(this, "Update Data Success", Toast.LENGTH_SHORT).show()
+                Log.d("editFilm", it.toString())
             }
         })
     }
